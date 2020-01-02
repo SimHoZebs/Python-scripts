@@ -17,7 +17,7 @@ class Window(QMainWindow):
         self.InitWindow()
 
     def InitWindow(self):
-        self.setWindowIcon(QtGui.QIcon("cat.jpg"))
+        self.setWindowIcon(QtGui.QIcon("icon.png"))
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
