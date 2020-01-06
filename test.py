@@ -1,34 +1,31 @@
-import sys
-from PySide2.QtWidgets import QApplication, QWidget, QLabel
-from PySide2.QtGui import QIcon, QPixmap
+q_value = 2_000_000
+num_list = []
+composite_list = []
+answer = 0
 
+for num in range(3, q_value + 1, 2):
+    num_list.append(num)
 
-class App(QWidget):
+for index in range(0, len(num_list)):
+    if num_list[index] >= q_value//num_list[index]:
+        break
 
-    def __init__(self):
-        super().__init__()
-        self.title = 'PySide2 image - pythonspot.com'
-        self.left = 100
-        self.top = 100
-        self.width = 640
-        self.height = 480
-        self.initUI()
+    for multiplier in range(num_list[index], q_value//num_list[index]+1, 2):
+        composite_num = num_list[index]*multiplier
 
-    def initUI(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
+        if composite_num >= q_value:
+            break
 
-        # Create widget
-        label = QLabel(self)
-        pixmap = QPixmap(
-            "C:/Users/simho/OneDrive - konkuk.ac.kr/Python scripts/Study - Test Area/UI File/cat.jpg")
-        label.setPixmap(pixmap)
-        self.resize(pixmap.width(), pixmap.height())
+        composite_list.append(composite_num)
 
-        self.show()
+num_set = set(num_list)
+composite_set = set(composite_list)
 
+set_diff = num_set.difference(composite_set)
+result_list = list(set_diff)
+result_list.append(2)
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+for num in result_list:
+    answer += num
+
+print(f"Answer = {answer}")
