@@ -102,6 +102,10 @@ q_value = [87819,
 fuel = 0
 
 for num in q_value:
-    fuel += (num // 3) - 2
+    new_fuel = (num//3) - 2
+    while new_fuel > 0:
+        print(new_fuel)
+        fuel += new_fuel
+        new_fuel = (new_fuel//3) - 2
 
 print(fuel)
