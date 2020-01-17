@@ -8,7 +8,7 @@ class MainWindow(QMainWindow):
 		super(MainWindow, self).__init__(*args, **kwargs)
 		self.setWindowTitle("My Awesome App")
 
-		label = QLabel("This is a PySide2 window!")
+		label = QLabel("Suck my dick")
 		label.setAlignment(Qt.AlignCenter)
 
 		label2 = QLabel("This is another window!")
