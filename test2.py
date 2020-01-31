@@ -1,35 +1,19 @@
-import sys
-import time
+#
+a = {'a': 1, 'b': 1, 'c': 2}
+indices = []
+key = 1
+for coord, dist in a.items():
+    if key == dist:
+        indices.append(coord)
 
-starttime = time.time_ns()
-inf = open('sample_input.txt')
+print(indices)
+#
 
-T = inf.readline();
+#
+a = {'a': 1, 'b': 1, 'c': 2}
+key = 1
+indices = [coord for coord, dist in a.items() if key == dist]
 
-for t in range(0, int(T)):
+print(indices)
 
-    N = inf.readline()
-    num_list = inf.readline().rstrip().split()
-
-    print(num_list)
-
-    counts = dict()
-    for n_list in num_list :
-        counts[n_list] = counts.get(n_list, 0) + 1
-    xor_list = list()
-
-    for odd_count in counts.keys() :
-        if counts[odd_count]%2 == 1 :
-            xor_list.append(counts.get(0, odd_count))
-    print(xor_list)
-    cnt = 0
-    Answer = int(xor_list[len(xor_list)-1])
-    while cnt < (len(xor_list)-1): # 조건문
-        Answer = (int(xor_list[cnt])^Answer)
-        cnt += 1
-
-    # Print the answer to standard output(screen).
-    print('Case #%d' %(int(t)+1))
-    print(Answer)
-    print(time.time_ns() - starttime)
-inf.close()
+"How to see a list of keys with desired variable"
