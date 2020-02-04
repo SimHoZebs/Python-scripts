@@ -30,11 +30,13 @@ for wire in [wire1_moves, wire2_moves]:
             wire_coords_set.add(f"{last_pos_x},{last_pos_y}")
 
 matching_coords = set.intersection(wire1_coords_set, wire2_coords_set)
+
 answer = 99**99
 for coord in matching_coords:
+    print(coord)
     coord = coord.split(",")
-    wire1_move_count = wire1_coords_list.index(coord) 
-    wire2_move_count = wire2_coords_list.index(coord)
+    wire1_move_count = wire1_coords_list.index([int(coord[0]),int(coord[1])]) + 1
+    wire2_move_count = wire2_coords_list.index([int(coord[0]),int(coord[1])]) + 1
     total_move_count = wire1_move_count + wire2_move_count
 
     answer = total_move_count if answer > total_move_count else answer
@@ -63,6 +65,7 @@ if same distance, make a list of coords with that distance
 if there are same coords in the lists, they are the answer.
 answer
 """
+
 
 
 
