@@ -20,5 +20,5 @@ while len(factors) < 500:
         break
     else:
         print(factors)
-        # print("Len of` factor list:", len(factors)*2)
+        # print("Len of factor list:", len(factors)*2)
         factors.clear()

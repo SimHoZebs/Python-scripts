@@ -1,39 +1,56 @@
-import matplotlib.pyplot as plt
-import numpy as np
+import time 
 
-test_no = 1
-chain = []
-chain_len = 0
-interval_len = 0
+a = time.time_ns()
+class Euler:
 
-pltpoint_x = []
-pltpoint_y = []
+    def __init__(self):
+        self.q_val = 0
+        self.chain = []
+        self.chain_len_list = [0]
+        self.reoccuring_num = 0
 
-while test_no < 10_000:
-    test_no += 1
-    val = test_no
-    pltpoint_x.append(test_no)
-    # print("test_no", test_no)
+        # self.x_list = []
+        # self.y_list = []
 
-    while val != 1:
-        if val%2 == 0:
-            val//=2
-        else:
-            val = 3*val + 1
-        chain.append(val)
-    print("this val's chain", len(chain))
-    pltpoint_y.append(len(chain))
-    if chain_len >= len(chain):
-        interval_len += 1
-    else:
-        chain_len = len(chain)
-        # print("Interval is ", interval_len)
-        interval_len = 0
-        chain.clear()
+    def numProcessing(self, num):
+        self.chain.append(num)
+        while num != 1:
+            if num % 2 == 0:
+                num //= 2
+            else:
+                num = 3*num + 1
+            if num < self.q_val:
+                self.reoccuring_num = num
+                break            
+            self.chain.append(num)
 
-fig, ax = plt.subplots()
-ax.plot(pltpoint_x, pltpoint_y)
+    # def plotting(self, a_list):
+    #     for x,y in enumerate(a_list):
+    #         self.x_list.append(x)
+    #         self.y_list.append(y)
 
-print(chain_len)
+    #     plt.plot(self.x_list, self.y_list)
+    #     pass
 
-plt.show()
+q = Euler()
+ans = 0
+
+# while not ans_found:
+if __name__ == "__main__":
+    while q.q_val != 1_000_000:
+        q.q_val += 1
+        # print("Testing num:", q.q_val)
+        q.numProcessing(q.q_val)
+        q.curr_chain_len = len(q.chain) + q.chain_len_list[q.reoccuring_num]       
+        q.chain_len_list.append(q.curr_chain_len)
+
+        if q.chain_len_list[q.q_val] >= ans:
+            ans = q.chain_len_list[q.q_val]
+        q.chain.clear()
+
+    print("Answer", q.chain_len_list.index(ans))
+    b = time.time_ns()
+    print("time taken", (b-a)/1000000000, "seconds")
+    # import matplotlib.pyplot as plt
+    # q.plotting(q.chain_len_list)
+    # plt.show()

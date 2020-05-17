@@ -1,7 +1,6 @@
 # Sim's Python Cheatsheet
 
-###### Type
-```python 
+###### Type 
 #String
 
 type_to_string_conversion = str( argument )
@@ -20,16 +19,14 @@ def find_alphabets_in_string(string):
 # Returns boolean value in if a string contains any alphabets in "alphabets".
 
 f"This is f-string formatting using {variable}"
-     
+
 #Boolean
 123
 
 variable_to_string_conversion = bool( argument )
 # If ( arugment ) == (), (False), (0), result is False. Else is True. 
-```
 
 ###### list
-```python
 list( argument )
 # makes a list out of iterable argument. 
 # Example: list('')
@@ -51,45 +48,18 @@ a_list[enumerate(iterable)]
 # Makes a_list a list of tuples of number counting up and the iterable
 # Example: [enumerate('Te')] 
 # >> [(0, 'T'), (1, 'e')]
-```
+
 
 ###### for and while loops
-```python
+
 for item1, item2 in list_with_tuples:
 	parameter1(item1)
 	parameter2(item2)
-```
-###### Misc.
-```python
-def function(*args, **kwargs):
-	command line
 
-# *args allows infinite arguments as input and puts them in a tuple.
-# **kwargs allows infinite key = item as input and puts them in a dictionary.
+#####
 
-len(string)
-#Returns the number of characters in string
+##### Class
 
-map(function, list_of_arguments)
-#runs each arguments consecutively in function and saves it. Compact version of while loop. Must be ran within list to see results.
-
-filter(function, list_of_arguments)
-#runs each arguments consecutively in function and save only true outputs. Compact version of while loop. Must be ran within list to see results.
-
-lambda
-
-reversed()
-
-```
-
-###### msvcrt library
-```python
-msvcrt.getch()
-# returns keypress. Must convert to str to use. Only works in cmd
-```
-
-###### Class
-```python
 class ClassName:
 
 	object_attribute = 'some value'
@@ -113,10 +83,9 @@ class ClassName2(ClassName):
 		ClassName.__init__(self, "argument")
 		# Argument for ClassName.__init__ can only be declared within ClassName2
 		
-```
+#####
 
 ##### Linting and Testing
-```python
 import unittest
 import py_file_for_test
 
@@ -129,4 +98,53 @@ class Test(unittest.TestCase):
 
 if __name__ == '__main__':
 	unittest.main()
-```
+######
+
+###### Misc.
+
+def function(*args, **kwargs):
+	command line
+
+# *args allows infinite arguments as input and puts them in a tuple.
+# **kwargs allows infinite key = item as input and puts them in a dictionary.
+
+len(string)
+#Returns the number of characters in string
+
+map(function, list_of_arguments)
+#runs each arguments consecutively in function and saves it. Compact version of while loop. Must be ran within list to see results.
+
+filter(function, list_of_arguments)
+#runs each arguments consecutively in function and save only true outputs. Compact version of while loop. Must be ran within list to see results.
+
+lambda
+
+reversed()
+
+#####
+
+##### msvcrt library
+
+msvcrt.getch()
+# returns keypress. Must convert to str to use. Only works in cmd
+
+#####
+
+##### "How to see a list oaf keys with desired variable"
+#
+a = {'a': 1, 'b': 1, 'c': 2}
+indices = []
+key = 1
+for coord, dist in a.items():
+    if key == dist:
+        indices.append(coord)
+
+print(indices)
+#
+
+#
+a = {'a': 1, 'b': 1, 'c': 2}
+key = 1
+indices = [coord for coord, dist in a.items() if key == dist]
+
+print(indices)
