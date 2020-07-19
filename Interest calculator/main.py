@@ -1,44 +1,66 @@
 interval_interest = [
-    [365.25,0.8],
-    [365.25, 0.6],
-    [7, 0.6]
+    [365.25,0.008],
+    [365.25, 0.006],
+    [7, 0.006]
     ]
 interval_interest.sort()
 
-#subject_dic = {subject: subject_data for subject, subject_data in enumerate(interval_interest)} #dic = [subject_num: [payout_interval, yearly interest]
+start_cash = 1_000_000
 
-def subjectPayDay(subject, subject_dic = subject_dic):
+iteration = {subject: 1 for subject in range(len(interval_interest))}
+axis_dic = {subject: [[0],[start_cash]] for subject in range(len(interval_interest))}
+
+def subjectPayDay(subject, interval_interest = interval_interest):
     return interval_interest[subject][0]
 
-axis_dic = {subject: [] for subject in range(len(interval_interest))}
+def subjectInterest(subject, interval_interest = interval_interest):
+    return interval_interest[subject][1]
 
-start_cash = 1_000_000
-duration = 10
-day = 0
-
-def cashAfterInterest(subject_id, day = day):
+def cashAfterInterest(subject, iteration = iteration):
     global start_cash
     global interval_interest
     
-    return start_cash*(interval_interest[subject_id][1] + 1)**(day*interval_interest[subject_id][0])
+    return start_cash * ((subjectInterest(subject) * subjectPayDay(subject))/365.25 + 1)**iteration[subject]
+
+duration = 7
+day = subjectPayDay(0)
+days_skipped = 0
 
 while day < 365.25 * duration:
+    print(day)
+    for subject in range(1, len(interval_interest)):
+
+        if days_skipped > 0:
+            day += subjectPayDay(0) - days_skipped
+            iteration[0] += 1
+            days_skipped = 0
+            break
+
+        if day + subjectPayDay(0) < subjectPayDay(subject) * iteration[subject]:
+            if subject != len(interval_interest) - 1:
+                continue
+            day = subjectPayDay(0) * iteration[0]
+            iteration[0] += 1
+            break
+        else:
+            days_skipped = subjectPayDay(subject) * iteration[subject] - day
+            day = subjectPayDay(subject) * iteration[subject]
+            iteration[subject] += 1
+            break
 
     for subject in range(len(interval_interest)):
-        if subjectPayDay(subject) == subjectPayDay(-1)
-        if interval_interest[subject] == interval_interest[-1]:
-            day = interval_interest[subject][0]
-        if day + interval_interest[subject][0] > interval_interest[subject + 1][0]:
-            days_skipped = interval_interest[subject + 1][0] - day
-            day = interval_interest[1][0]
+        if day % subjectPayDay(subject) == 0:
+            axis_dic[subject][0].append(day)
+            axis_dic[subject][1].append(cashAfterInterest(subject))
         else:
-            day = interval_interest[0][0]
-        for subject in range(len(interval_interest)):
-            if day == interval_interest[subject][0]:
-                axis_dic[0].append(cashAfterInterest(0))
+            axis_dic[subject][0].append(day)
+            axis_dic[subject][1].append(axis_dic[subject][-1][-1])
 
-    for payout_interval in interval_interest:
-        if day == payout_interval:
-            start_cash*(interest + 1)**(day * payout_interval)
+import matplotlib.pyplot as plt
+
+for subject in axis_dic:
+    plt.plot(axis_dic[subject][0], axis_dic[subject][1])
+
+plt.show()
 
 #"If the graph calculates every day, then "
