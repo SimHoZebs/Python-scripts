@@ -10,10 +10,12 @@ start_cash = 1_000_000
 iteration = {subject: 1 for subject in range(len(interval_interest))}
 axis_dic = {subject: [[0],[start_cash]] for subject in range(len(interval_interest))}
 
-def subjectPayDay(subject, interval_interest = interval_interest):
+def subjectPayDay(subject):
+    global interval_interest
     return interval_interest[subject][0]
 
-def subjectInterest(subject, interval_interest = interval_interest):
+def subjectInterest(subject):
+    global interval_interest 
     return interval_interest[subject][1]
 
 def cashAfterInterest(subject, iteration = iteration):
