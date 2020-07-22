@@ -64,5 +64,3 @@ for subject in axis_dic:
     plt.plot(axis_dic[subject][0], axis_dic[subject][1])
 
 plt.show()
-
-#"If the graph calculates every day, then "
