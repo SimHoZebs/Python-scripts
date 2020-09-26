@@ -7,8 +7,6 @@ Created on Sat Feb  9 16:41:35 2019
 
 import random
 
-
-
 def error_prevention():
     global guess
     global is_string
