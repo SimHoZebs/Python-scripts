@@ -1,48 +1,101 @@
+answers = []
+#contains list 'winners', which contain 1 or more 'wiiner'
+ballot = []
+#contains list 'voters', which contains 'candidates' sorted by 'rank'.
 candidates = {}
-ballot_content = []
-voters_count = 0
 
 def main():
-    global candidates
-    global ballot_content
+    global answers, ballot, candidates
 
-    cases = int(input())
+    candidates = {input(): 0 for _ in range(int(input()))}
+    ballot = get_votes()
+    candidates = count_votes()
 
-    for case in range(cases):
-        #Repeat the code as many times as there are cases for it
+    break_point = (len(ballot))/2
+    #print("Breakpoint:", break_point)
+    winners = winner_names(break_point)
 
-        input()     #Empty input for spacing
-        candidate_count = int(input())
-        candidates = {input(): 0 for count in range(candidate_count)}
-
-        while True:
-            try:
-                ballot_content.append([int(vote) for vote in input().split()])
-
-                count_votes()
-            except:
-                break
-        
-        print(candidates)
+    while len(winners) < 1:
         eliminate()
+        candidates = count_votes()
+        winners = winner_names(break_point)
+
+    answers.append(winners)
+
+def get_votes():
+    global candidates
+    temp_ballot = []
+
+    while True:
+        voted_ranks = [int(rank) for rank in input().split()]
+
+        if len(voted_ranks) < 1:
+            #Catches EOL/ \n input
+            break
+
+        voter = [0 for i in candidates]
+        for candidate, rank in zip(candidates, voted_ranks):
+            voter[rank - 1] = candidate
+        
+        temp_ballot.append(voter)
+    
+    return temp_ballot
 
 def count_votes():
-    global ballot_content
-    global candidates
-    global voters_count
+    global ballot, candidates
+    temp_candidates = {candidate: 0 for candidate in candidates.keys()}
 
-    for count, candidate in enumerate(candidates):
-        candidates[candidate] = candidates[candidate] + ballot_content[voters_count][count]
-    voters_count += 1
+    for voter in ballot:
+        temp_candidates[voter[0]] += 1
+    
+    #print("Candidates", temp_candidates)
+    return temp_candidates
+
+def winner_names(break_point):
+    global candidates, ballot
+    winner = []
+
+    if len(candidates) == 1:
+        winner = list(candidates.keys())
+    else:
+        highest_votes = max(list(candidates.values()))
+
+        if highest_votes > break_point:
+            for candidate, score in candidates.items():
+                if score == highest_votes:
+                    winner = [candidate]
+                    break
+        elif highest_votes == len(ballot)/len(candidates):
+            winner = list(candidates.keys())
+
+    #print("Winner is", winner)
+    return winner
 
 def eliminate():
-    global voters_count
-    global candidates
-    candidate_count = len(candidates)
+    global candidates, ballot
+    lowest_votes = min(list(candidates.values()))
+    eliminated = []
 
-    breaking_point = (voters_count * (candidate_count + 1))/2
-    print(breaking_point)
-    for candidate in candidates:
-        if candidates[candidate] <= breaking_point:
-            print()
-    pass
+    eliminated = [candidate for candidate, score in candidates.items() if score == lowest_votes]
+    
+    for candidate in eliminated:
+        candidates.pop(candidate)
+        for voter in ballot:
+            voter.remove(candidate)
+    
+    #print("Eliminated", eliminated)
+
+if __name__ == "__main__":
+
+    test_case = int(input())
+    input()     #space after case input
+    for _ in range(test_case):
+        main()
+    
+    for winners in answers:
+        print()
+        if len(winners) == 1:
+            print(winners[0])
+        else:
+            for winner in winners:
+                print(winner)
