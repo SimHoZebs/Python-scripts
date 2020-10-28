@@ -3,6 +3,7 @@ answers = []
 ballot = []
 #contains list 'voters', which contains 'candidates' sorted by 'rank'.
 candidates = {}
+#Key: 'candidate', Value: 'score'
 
 def main():
     global answers, ballot, candidates
@@ -12,7 +13,6 @@ def main():
     candidates = count_votes()
 
     break_point = (len(ballot))/2
-    #print("Breakpoint:", break_point)
     winners = winner_names(break_point)
 
     while len(winners) < 1:
@@ -48,39 +48,38 @@ def count_votes():
     for voter in ballot:
         temp_candidates[voter[0]] += 1
     
-    #print("Candidates", temp_candidates)
+    print("Candidates", temp_candidates)
     return temp_candidates
 
 def winner_names(break_point):
     global candidates, ballot
     winner = []
 
-    highest_votes = max(list(candidates.values()))
+    highest_vote_count = max(list(candidates.values()))
 
-    if highest_votes > break_point:
+    if highest_vote_count > break_point:
         for candidate, score in candidates.items():
-            if score == highest_votes:
+            if score == highest_vote_count:
                 winner = [candidate]
                 break
-    elif highest_votes == len(ballot)/len(candidates):
+    elif highest_vote_count == len(ballot)/len(candidates):
         winner = list(candidates.keys())
 
-    #print("Winner is", winner)
+    print("Winner is", winner)
     return winner
 
 def eliminate():
     global candidates, ballot
-    lowest_votes = min(list(candidates.values()))
-    eliminated = []
+    lowest_vote_count = min(list(candidates.values()))
 
-    eliminated = [candidate for candidate, score in candidates.items() if score == lowest_votes]
+    eliminated = [candidate for candidate, vote_count in candidates.items() if vote_count == lowest_vote_count]
     
     for candidate in eliminated:
         candidates.pop(candidate)
         for voter in ballot:
             voter.remove(candidate)
     
-    #print("Eliminated", eliminated)
+    print("Eliminated", eliminated)
 
 if __name__ == "__main__":
 
@@ -90,9 +89,7 @@ if __name__ == "__main__":
         main()
     
     for winners in answers:
-        print()
-        if len(winners) == 1:
-            print(winners[0])
-        else:
-            for winner in winners:
-                print(winner)
+        for winner in winners:
+            print(winner)
+        if answers[-1] != winners:
+            print()
