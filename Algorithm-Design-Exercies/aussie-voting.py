@@ -55,18 +55,15 @@ def winner_names(break_point):
     global candidates, ballot
     winner = []
 
-    if len(candidates) == 1:
-        winner = list(candidates.keys())
-    else:
-        highest_votes = max(list(candidates.values()))
+    highest_votes = max(list(candidates.values()))
 
-        if highest_votes > break_point:
-            for candidate, score in candidates.items():
-                if score == highest_votes:
-                    winner = [candidate]
-                    break
-        elif highest_votes == len(ballot)/len(candidates):
-            winner = list(candidates.keys())
+    if highest_votes > break_point:
+        for candidate, score in candidates.items():
+            if score == highest_votes:
+                winner = [candidate]
+                break
+    elif highest_votes == len(ballot)/len(candidates):
+        winner = list(candidates.keys())
 
     #print("Winner is", winner)
     return winner
