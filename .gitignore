@@ -1,6 +1,7 @@
 # Specify filepatterns you want git to ignore.
 Blackjack/
 Kivy-study/
+Jen/
 test?.py
 .vs/
 .vscode/
